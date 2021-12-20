@@ -26,25 +26,24 @@
                     <div class="tab-pane fade" id="Todoer" role="tabpane2" aria-labelledby="Todoer-Box">
                         <div id="TODOER">
                             <h2 id="E_label"><strong>ToDoer</strong></h2>
-                            <form class="row form" action="/Todoer">
+                            <form class="row form" action="/Todoer" method="post">
+                                {% csrf_token %}
                                 <div class = "col-12 col-md-4 input-group pr-md-0" id="Task_input">
                                 <input type="text" name="Task" placeholder="Task" class="form-control">
                                 </div>
                                 <div class="col-12 col-md-3 pr-md-0 pl-md-0">
-                                <select class="custom-select" name="Task_category" id="category-input">
+                                <select class="custom-select" name="Task_Category" id="category-input">
                                     <option selected>Choose...</option>
-                                    <option value="Save">Save</option>
-                                    <option value="Purchase_savings">Purchase savings</option>
-                                    <option value="snappfood">SnappFood</option>
-                                    <option value="Junk Food">Junk Food</option>
-                                    <option value="fares">fares</option>
+                                    {% for category in T_category %}
+                                        <option value="{{category}}">{{category}}</option> 
+                                    {% endfor %}
                                 </select>
                                 </div>
                                 <div class="col-12 col-md-5 input-group pl-md-0" id="date_input" >
-                                <input type="date" name="deadline" class="form-control">
+                                <input type="date" name="Deadline" class="form-control">
                                 </div>
                                 <div class="col-12  input-group">
-                                    <textarea class="form-control" autofocus="false" name="description" id="Tdoer-discription"></textarea>
+                                    <textarea class="form-control" autofocus="false" name="Description" id="Tdoer-discription"></textarea>
                                 </div>
                                 <div class="col-12 input-group-append">
                                     <button class="btn btn-outline-secondary text-light btn-primary p-1" id="BTNEconomy_Todeor" type="submit">
@@ -63,15 +62,14 @@
                     <div class="tab-pane fade" id="Economy-setting" role="tabpane3" aria-labelledby="Economy-form">
                         <div id="E">
                         <h2 id="E_label"><strong>Economy</strong></h2>
-                        <form class="row form" action="/Economy">
+                        <form class="row form" action="/Economy" method="post">
+                            {% csrf_token %}
                             <div class="col-12 col-md-4 pr-md-0">
-                                <select class="custom-select" name="category" id="category-input">
+                                <select class="custom-select" name="Category" id="category-input">
                                     <option selected>Choose...</option>
-                                    <option value="Save">Save</option>
-                                    <option value="Purchase_savings">Purchase savings</option>
-                                    <option value="snappfood">SnappFood</option>
-                                    <option value="Junk Food">Junk Food</option>
-                                    <option value="fares">fares</option>
+                                    {% for category in E_category %}
+                                    <option value="{{category}}">{{category}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class = "col-12 col-md-3 input-group pl-md-0 pr-md-0" id="Amount_input">
@@ -81,7 +79,7 @@
                                 <input type="date" name="date" class="form-control">
                             </div>
                                 <div class="col-12  input-group">
-                                <textarea class="form-control" autofocus="false" name="discription" id="economy-discription"></textarea>
+                                <textarea class="form-control" autofocus="false" name="Description" id="economy-discription"></textarea>
                                 </div>
                             <div class="col-12 input-group-append">
                                 <button class="btn btn-outline-secondary text-light btn-primary p-1" id="BTNEconomy_Todeor" type="submit">
@@ -106,45 +104,51 @@
                                     <th scope="col">Description</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                    <tr scope="row">
-                                        <td scope="col">
-                                            <div class="text-center p-2 input-group">
-                                            <input type="checkbox" class="form-check" name="TaskStatus" value="Done">
-                                            </div>
-                                        </td>
-                                        <td scope="col">
-                                            <div class="text-center">
-                                            <strong>Task</strong>
-                                            </div>
-                                        </td>
-                                        <td scope="col">
-                                            <div class="text-center">
-                                            <strong>Category</strong>
-                                            </div>
-                                        </td>
-                                        <td scope="col">
-                                            <div class="text-center">
-                                            <strong>Dead Line</strong>
-                                            </div>
-                                        </td>
-                                        <td scope="col">
-                                            <a class="text-dark" data-toggle="collapse" href="#Description" role="button" aria-expanded="false" aria-controls="Description">
-                                            Description
-                                            </a>  
-                                            <div class="collapse" id="Description">
-                                            <div class="card card-body">
-                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                            </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="row justify-content-end">
-                            <div class="col-2">
-                                <Button type="submit" class="btn btn-primary">Save Changes</Button>
-                            </div>
+                                
+                                <form action="/Task_view" method="post">
+                                    {% csrf_token %}    
+                                    <tbody>
+                                        {% for task in tasks %}
+                                            <tr scope="row">
+                                                    <td scope="col">
+                                                        <div class="text-center p-2 input-group">
+                                                        <input type="checkbox" class="form-check" name="taskstatus" value="Done">
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <div class="text-center">
+                                                        <strong>{{ task.Task }}</strong>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <div class="text-center">
+                                                        <strong> {{task.Task_category}} </strong>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <div class="text-center">
+                                                        <strong>{{task.Deadline}}</strong>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <a class="text-dark" data-toggle="collapse" href="#{{ task.Task }}" role="button" aria-expanded="false" aria-controls="Description">
+                                                        Description
+                                                        </a>  
+                                                        <div class="collapse" id="{{ task.Task }}">
+                                                        <div class="card card-body">
+                                                            {{task.Description}}
+                                                        </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    </table>
+                                    <div class="row justify-content-end">
+                                    <div class="col-2">
+                                        <Button type="submit" action="/" class="btn btn-primary">Save Changes</Button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="list-events" role="tabpane5" aria-labelledby="list-events-list">Events</div>

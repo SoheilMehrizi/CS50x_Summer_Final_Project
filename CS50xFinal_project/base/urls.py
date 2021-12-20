@@ -12,4 +12,7 @@ urlpatterns = [
     path("Profile", views.Profile, name="Profile"),
     path("LogIn", views.LogIn, name="LogIn"),
     path("LogOut", views.LogOut, name="LogOut"),
+    path("Economy", views.economy, name="Economy"),
+    path("Todoer", views.todoer, name="Todoer"),
+    path("Task_view", views.Task_view, name="Task_view"),
 ]
