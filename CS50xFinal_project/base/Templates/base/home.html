@@ -16,7 +16,8 @@
             </div>
             <div class="row">
 
-                <div class="col-12 col-md-6 width-md-100%"> 
+                <div class="col-12 col-md-6 width-md-100%">
+                    <!-- A Image Of Me That thats url`s in db -->
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/sSqNgsZ9RA8" 
                 title="YouTube video player" frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -25,14 +26,8 @@
                 <div class="col-12 col-md-6" id="aboutparagraph">
                 <div class="row">
                 <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Donec sed pellentesque velit. Fusce finibus ut dolor a sodales.
-                Praesent scelerisque leo vel nibh fermentum elementum. 
-                Etiam id nisi et tortor sollicitudin pellentesque non at metus.
-                Maecenas sed dapibus tortor. Proin ornare luctus ex. 
-                Ut lacinia augue vel dolor varius finibus. Integer diam diam,
-                mollis nec felis vel, luctus ornare metus. 
-                Fusce dolor dolor, elementum nec tincidunt sit amet, commodo sed tortor.
+                    <!-- Discription Of My Bio -->
+                    {{Bio}}
                 </p>
             </div>
                 </div>                    
@@ -49,36 +44,21 @@
             </div>
         </div>
         <div class = "row">
+            {% for SPEI in SPEIS %}
             <div class="col-12 col-md-4">
-            <div class="card">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                <h5 class="card-title">specialities</h5>
-                <p class="card-text">This is a longer card with supporting text below as a 
-                                    natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="card">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title text-dark">{{SPEI.name}}</h5>
+                    <p class="card-text text-dark">
+                        {{SPEI.Description}}    
+                    </p>
+                    <h6 class="text-right text-success"> {{SPEI.Date_Of_earn}} </h6>
+                    </div>
                 </div>
-            </div>
-            </div>
-            <div class="col-12 col-md-4">
-            <div class="card">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                <h5 class="card-title">specialities</h5>
-                <p class="card-text">This is a longer card with supporting text below as a 
-                    natural lead-in to additional content. This content is a little bit longer.</p>
                 </div>
-            </div>
-            </div>
-            <div class="col-12 col-md-4">
-            <div class="card">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                <h5 class="card-title">specialities</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to 
-                    additional content. This content is a little bit longer.</p>
-                </div>
-            </div>
-            </div>
+            {% endfor %}
+
         </div>
         </div>
     </div>
@@ -89,6 +69,7 @@
             <div class="col-12">
             <h2 style="font-family: Arial;"><a href="/Expriences" class="text-dark">Experiences</a></h2>
             <hr width="80%">
+            {% for experience in experiences %}
             <div class="row">
                 <div class="col-12 col-6">
                     <div class="card mb-3" style="max-width: 540px;">
@@ -98,9 +79,11 @@
                         </div>
                         <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <h5 class="card-title">{{experience.name}}</h5>
+                            <p class="card-text">
+                                {{experience.Description}}
+                            </p>
+                            <p class="card-text"><small class="text-success" style="text-align: right;">{{experience.Date_Of_Earn}}</small></p>
                         </div>
                         </div>
                     </div>
@@ -108,26 +91,9 @@
                 </div>
                 <div class="col-0 col-6"></div>
                 
-            </div>
-            <div class="row">
-                <div class="col-12 col-6">
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="..." class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <div class="col-0 col-6"></div>
-            </div> 
+            </div>              
+            {% endfor %}
+
             </div>
         </div>
         </div>
@@ -199,14 +165,15 @@
         <div class="row">
             <div class="col-0 col-md-3"></div>
             <div class="col-12 col-md-6">
-            <form id="contactrow">
+            <form id="contactrow" action="/Contact" method="POST">
+                {% csrf_token %}
                 <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
                 <div class="form-group">
                 <label for="Message">Message</label>
-                <textarea type="text" class="form-control" id="Message" placeholder="Message" rows="4"></textarea>
+                <textarea type="text" name="message" class="form-control" id="Message" placeholder="Message" rows="4"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

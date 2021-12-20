@@ -14,15 +14,16 @@
                 <div class="row justify-content-center" id="row-1">
                     <div class="col-md-12" id="cl1">
                         <h3><strong>Sign In To IeMinder</strong></h3>
-                        <form class="form" id="Sform">
+                        <form class="form" id="Sform" action="\LogIn" method="post">
+                            {% csrf_token %}
                             <div class="form-group">
-                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">
+                                <input type="username" name="Username" class="form-control" id="Username"
+                                    aria-describedby="UsernameHelp" placeholder="UserName">
+                                <small id="UsernameHelp" class="form-text text-muted">
                                     We'll never share your email with anyone else.</small>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                                 <H6 id="pwV-message"></H6>
                             </div>
                             <div class="form-check">
@@ -38,8 +39,7 @@
 
         </div>
         </div>
-{% endblock content %}
-            <script>
+        <script>
             document.getElementById("Sform").submit=false;
             document.getElementById("submitbotton").disabled = true;
 
@@ -75,9 +75,9 @@
             document.getElementById("exampleCheck1").addEventListener("change",function(){
                     var ch = document.querySelector("#exampleCheck1");
                     let pw  = document.querySelector("#exampleInputPassword1").value;
-                    let email = document.querySelector("#exampleInputEmail1").value;
+                    let Username = document.querySelector("#Username").value;
                     if (ch.checked){
-                        if(pw != "" && email != ""){
+                        if(pw != "" && Username != ""){
                             document.getElementById("submitbotton").disabled = false;
                         }
                     }
@@ -85,4 +85,7 @@
                         document.getElementById("submitbotton").disabled = true;
                     }
             });
-    </script>
+</script>
+
+
+{% endblock content %}

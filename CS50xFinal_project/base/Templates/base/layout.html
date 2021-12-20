@@ -36,8 +36,23 @@
           <a class="nav-link" href="/Home#CVRow"><strong>CV</strong></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/Home#conta ctrow"><strong>Contact</strong></a>
+          <a class="nav-link" href="/Home#contactrow"><strong>Contact</strong></a>
         </li>
+        {% if not user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="/LogIn"><strong>LogIn</strong></a>
+          </li>
+        {% endif %}
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="/Profile"><strong>Profile</strong></a>
+          </li>
+      {% endif %}
+      {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="/LogOut"><strong>LogOut</strong></a>
+        </li>
+  {% endif %}
       </ul>
   </div>
   </div>
